@@ -2443,3 +2443,7 @@ var CommonDanmakuFormat = (function () {
 
     return CommonDanmakuFormat;
 })();
+
+export {
+  CommentManager
+}
