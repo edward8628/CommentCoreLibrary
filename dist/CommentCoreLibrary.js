@@ -391,6 +391,11 @@ var CoreComment = (function () {
         this._shadow = true;
         this._font = '';
         this._transform = null;
+        /**/ 
+        this._ribbon = ''
+        this._avatar = ''
+        /**/
+
         if (!parent) {
             throw new Error('Comment not bound to comment manager.');
         }
@@ -468,6 +473,16 @@ var CoreComment = (function () {
         if (init.hasOwnProperty('axis')) {
             this.axis = init['axis'];
         }
+
+        /**/
+        if (init.hasOwnProperty('ribbon')) {
+            this._ribbon = init['ribbon'];
+        }
+        if (init.hasOwnProperty('avatar')) {
+            this._avatar = init['avatar'];
+        }
+        /**/
+
         if (init.hasOwnProperty('transform')) {
             this._transform = new CommentUtils.Matrix3D(init['transform']);
         }
@@ -496,6 +511,14 @@ var CoreComment = (function () {
         if (this._color != 0xffffff) {
             this.color = this._color;
         }
+        /**/
+        if (this._ribbon) {
+            this.ribbon = this._ribbon;
+        }
+        if (this._avatar) {
+            this.avatar = this._avatar;
+        }
+        /**/
         this.shadow = this._shadow;
         if (this._border) {
             this.border = this._border;
@@ -519,6 +542,34 @@ var CoreComment = (function () {
             this.animate();
         }
     };
+
+    /**/
+    Object.defineProperty(CoreComment.prototype, "ribbon", {
+        get: function () {
+            return this._ribbon;
+        },
+        set: function (ribbon) {
+            this._ribbon = ribbon;
+            this.dom.className = this.parent.options.global.className + ' ribbon';
+            this.dom.style.backgroundImage = `${ribbon}`
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CoreComment.prototype, "avatar", {
+        get: function () {
+            return this._avatar;
+        },
+        set: function (avatar) {
+            this._avatar = avatar;
+            this.dom.className = this.parent.options.global.className + ' avatar';
+            this.dom.style.backgroundImage = `url(${avatar})`;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**/
+
     Object.defineProperty(CoreComment.prototype, "x", {
         get: function () {
             if (this._x === null || this._x === undefined) {
