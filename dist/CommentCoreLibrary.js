@@ -551,7 +551,7 @@ var CoreComment = (function () {
         set: function (ribbon) {
             this._ribbon = ribbon;
             this.dom.className = this.parent.options.global.className + ' ribbon';
-            this.dom.style.backgroundImage = `${ribbon}`
+            this.dom.style.backgroundImage = ribbon;
         },
         enumerable: true,
         configurable: true
@@ -563,7 +563,7 @@ var CoreComment = (function () {
         set: function (avatar) {
             this._avatar = avatar;
             this.dom.className = this.parent.options.global.className + ' avatar';
-            this.dom.style.backgroundImage = `url(${avatar})`;
+            this.dom.style.backgroundImage = 'url(' + avatar + ')';
         },
         enumerable: true,
         configurable: true
