@@ -1093,7 +1093,10 @@ var CommentSpaceAllocator = (function () {
         }
         // if collision is true, set ttl to 0 and not show in runline
         if (comment.parent.options.collision === true) {
-            comment.ttl = 0;
+            // still show user send danmu and border danmu
+            if (!comment.border) {
+                comment.ttl = 0;
+            }
         }
         return this.assign(comment, cindex + 1);
     };
