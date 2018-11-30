@@ -119,6 +119,7 @@ var CommentManager = (function() {
                 scale:1
             },
             limit: 0,
+            collision: false,
             seekTrigger: 2000
         };
         this.timeline = [];
@@ -1025,7 +1026,25 @@ var CommentSpaceAllocator = (function () {
         this._height = height;
     }
     CommentSpaceAllocator.prototype.willCollide = function (existing, check) {
-        return existing.stime + existing.ttl >= check.stime + check.ttl / 2;
+        if(existing.ttl <= 0){
+            return false;
+        }
+        if(Math.abs(existing.x) + existing.width > Math.abs(check.x)){
+            return true;
+        }
+        var speed = (existing.right) / existing.dur; //计算速度
+        var speed2 = (check.right) / check.dur;
+        var ttl = existing.x / speed; //计算剩余时间,自带的ttl测试下来并不准
+        var ttl2 = check.x / speed2;
+        var px1 = -existing.width + speed * ttl;
+        var px2 = -check.width + speed2 * ttl2;
+        if (px1 + existing.width > px2) {
+            return true;
+        } else {
+            return false;
+        }
+        // 以下是源码的逻辑
+        // return existing.stime + existing.ttl >= check.stime + check.ttl / 2;
     };
     CommentSpaceAllocator.prototype.pathCheck = function (y, comment, pool) {
         var bottom = y + comment.height;
@@ -1071,6 +1090,10 @@ var CommentSpaceAllocator = (function () {
                 comment.cindex = cindex;
                 return y;
             }
+        }
+        // if collision is true, set ttl to 0 and not show in runline
+        if (comment.parent.options.collision === true) {
+            comment.ttl = 0;
         }
         return this.assign(comment, cindex + 1);
     };
