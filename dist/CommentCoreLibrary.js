@@ -551,7 +551,7 @@ var CoreComment = (function () {
         },
         set: function (ribbon) {
             this._ribbon = ribbon;
-            this.dom.className = this.parent.options.global.className + ' ribbon';
+            this.dom.className = this.dom.className + ' ribbon';
             this.dom.style.backgroundImage = ribbon;
         },
         enumerable: true,
@@ -563,8 +563,10 @@ var CoreComment = (function () {
         },
         set: function (avatar) {
             this._avatar = avatar;
-            this.dom.className = this.parent.options.global.className + ' avatar';
-            this.dom.style.backgroundImage = 'url(' + avatar + ')';
+            let child = document.createElement('div')
+            child.className = child.className + ' avatar'
+            child.style.backgroundImage = 'url(' + avatar + ')';
+            this.dom.appendChild(child)
         },
         enumerable: true,
         configurable: true
