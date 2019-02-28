@@ -566,7 +566,8 @@ var CoreComment = (function () {
             let child = document.createElement('div')
             child.className = child.className + ' avatar'
             child.style.backgroundImage = 'url(' + avatar + ')';
-            this.dom.appendChild(child)
+            this.dom.insertBefore(child, this.dom.firstChild);
+
         },
         enumerable: true,
         configurable: true
